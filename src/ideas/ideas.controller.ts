@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { IdeasService } from './ideas.service';
 import { CreateIdeaDto } from './dto/create-idea.dto';
-import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '@/auth/guards/jwt-auth-guard';
 import {
   CurrentUser,
@@ -26,5 +36,12 @@ export class IdeasController {
   @UseGuards(JwtAuthGuard)
   create(@Body() dto: CreateIdeaDto, @CurrentUser() user: CurrentUserPayload) {
     return this.ideasService.create(dto, user.id);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(JwtAuthGuard)
+  remove(@Param('id') id: string) {
+    return this.ideasService.remove(id);
   }
 }

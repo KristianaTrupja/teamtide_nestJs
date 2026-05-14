@@ -6,5 +6,6 @@ import { BoardsGateway } from './boards.gateway';
 @Module({
   controllers: [BoardsController],
   providers: [BoardsService, BoardsGateway],
+  exports: [BoardsGateway],
 })
 export class BoardsModule {}

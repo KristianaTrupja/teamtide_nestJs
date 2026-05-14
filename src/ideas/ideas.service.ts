@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateIdeaDto } from './dto/create-idea.dto';
-
 @Injectable()
 export class IdeasService {
   constructor(private readonly prisma: PrismaService) {}
@@ -84,4 +83,17 @@ export class IdeasService {
     },
   });
 }
+
+  async remove(id: string) {
+    const idea = await this.prisma.idea.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+
+    if (!idea) {
+      throw new NotFoundException('Idea not found');
+    }
+
+    await this.prisma.idea.delete({ where: { id } });
+  }
 }

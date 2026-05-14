@@ -84,7 +84,7 @@ model Board {
   id String @id @default(uuid())
 
   ideaId String @unique
-  idea   Idea   @relation(fields: [ideaId], references: [id])
+  idea   Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)
 
   stickers Sticker[]
 
@@ -105,7 +105,7 @@ model Sticker {
   isPinned Boolean @default(false)
 
   boardId String
-  board   Board  @relation(fields: [boardId], references: [id])
+  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
   authorId String
   author   User   @relation(fields: [authorId], references: [id])
@@ -121,7 +121,7 @@ model Reaction {
   emoji String
 
   stickerId String
-  sticker   Sticker @relation(fields: [stickerId], references: [id])
+  sticker   Sticker @relation(fields: [stickerId], references: [id], onDelete: Cascade)
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
@@ -136,7 +136,7 @@ model Comment {
   content String
 
   ideaId String
-  idea   Idea   @relation(fields: [ideaId], references: [id])
+  idea   Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)
 
   authorId String
   author   User   @relation(fields: [authorId], references: [id])
@@ -151,7 +151,7 @@ model PlanSummary {
   decisionsJson Json?
 
   ideaId String @unique
-  idea   Idea   @relation(fields: [ideaId], references: [id])
+  idea   Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)
 
   createdById String
   createdAt   DateTime @default(now())
